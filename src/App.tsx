@@ -539,10 +539,12 @@ function App() {
                 `}
                 style={{ transitionDelay: servicesSectionInView ? `${150 + idx * 100}ms` : '0ms' }}
               >
-                <div className="w-11/12 h-px bg-gray-300 mb-6 mx-auto"></div>
+                <div className="w-11/12 h-px bg-gray-300 mb-6 mx-auto relative overflow-hidden group-hover:bg-transparent">
+                  <span className="absolute top-0 left-1/2 w-0 h-full bg-black transition-all duration-500 ease-out group-hover:w-full group-hover:left-0"></span>
+                </div>
                 <h4 className="text-2xl font-semibold mb-3 tracking-tight leading-tight cursor-pointer">
                   {item.title}
-              </h4>
+                </h4>
                 <div className="min-h-[64px] flex items-start justify-center">
                   <p className="text-gray-400 italic text-base mt-1 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 -translate-y-2 transition-all duration-300">
                     {item.desc}
