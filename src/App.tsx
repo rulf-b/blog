@@ -69,6 +69,8 @@ function App() {
         title: 'İletişim',
         subtitle: 'Aşağıdaki formu doldurarak veya sosyal medya hesaplarımdan bana ulaşabilirsin!',
         formTitle: 'Mesaj Gönder',
+        contactTitle: 'Bana Ulaşın',
+        contactDescription: 'Proje fikirlerinizi, işbirliği tekliflerinizi veya sadece bir merhaba demek için aşağıdaki kanalları kullanabilirsiniz. En kısa sürede size geri döneceğim.',
         name: 'Adınız *',
         email: 'E-posta Adresiniz *',
         message: 'Mesajınız *',
@@ -129,6 +131,8 @@ function App() {
         title: 'Contact',
         subtitle: 'You can reach me by filling out the form below or through my social media accounts!',
         formTitle: 'Send Message',
+        contactTitle: 'Get In Touch',
+        contactDescription: 'You can use the channels below for your project ideas, collaboration offers, or just to say hello. I will get back to you as soon as possible.',
         name: 'Your Name *',
         email: 'Your Email *',
         message: 'Your Message *',
@@ -541,145 +545,147 @@ function App() {
       <section
         id="iletisim"
         ref={contactSectionRef}
-        className={`py-20 lg:py-32 bg-white text-darkgray transition-all duration-700
-          ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+        className={`py-20 lg:py-32 bg-gray-50 text-darkgray transition-all duration-700
+          ${contactSectionInView ? 'opacity-100' : 'opacity-0'}
         `}
       >
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 transition-all duration-700">
-            {t.contact.title}
-          </h2>
-          <p className="text-center text-lg text-gray-500 mb-16 transition-all duration-700">
-            {t.contact.subtitle}
-          </p>
-          
-          {/* Sosyal Medya Butonları */}
-          <div
-            className={`flex flex-col sm:flex-row flex-wrap justify-center items-center gap-4 sm:gap-6 mb-16 transition-all duration-700
-              ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-            `}
-            style={{ transitionDelay: contactSectionInView ? '100ms' : '0ms' }}
-          >
-            {/* Gmail */}
-            <a
-              href="mailto:zeynepsedaargut@gmail.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-white border-2 border-gray-200 rounded-lg hover:border-darkgray hover:bg-gray-50 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md w-full sm:w-auto justify-center sm:justify-start"
-            >
-              <Mail size={24} className="text-gray-600 group-hover:text-darkgray transition-colors duration-300" />
-              <span className="text-base sm:text-lg font-medium text-gray-700 group-hover:text-darkgray transition-colors duration-300">
-                zeynepsedaargut@gmail.com
-              </span>
-              <ExternalLink size={16} className="text-gray-400 group-hover:text-darkgray transition-colors duration-300" />
-            </a>
-
-            {/* Instagram */}
-            <a
-              href="https://www.instagram.com/zeysedargut?igsh=MW1nZDZzdmx0ZnY2aw%3D%3D&utm_source=qr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-white border-2 border-gray-200 rounded-lg hover:border-darkgray hover:bg-gray-50 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md w-full sm:w-auto justify-center sm:justify-start"
-            >
-              <Instagram size={24} className="text-gray-600 group-hover:text-darkgray transition-colors duration-300" />
-              <span className="text-base sm:text-lg font-medium text-gray-700 group-hover:text-darkgray transition-colors duration-300">
-                @zeysedargut
-              </span>
-              <ExternalLink size={16} className="text-gray-400 group-hover:text-darkgray transition-colors duration-300" />
-            </a>
-
-            {/* LinkedIn */}
-            <a
-              href="https://www.linkedin.com/in/zeynep-seda-argut?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-white border-2 border-gray-200 rounded-lg hover:border-darkgray hover:bg-gray-50 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md w-full sm:w-auto justify-center sm:justify-start"
-            >
-              <Linkedin size={24} className="text-gray-600 group-hover:text-darkgray transition-colors duration-300" />
-              <span className="text-base sm:text-lg font-medium text-gray-700 group-hover:text-darkgray transition-colors duration-300">
-                Zeynep Seda Argut
-              </span>
-              <ExternalLink size={16} className="text-gray-400 group-hover:text-darkgray transition-colors duration-300" />
-            </a>
-
-            {/* Behance */}
-            <a
-              href="https://www.behance.net/zeynepsedacb81"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-white border-2 border-gray-200 rounded-lg hover:border-darkgray hover:bg-gray-50 transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md w-full sm:w-auto justify-center sm:justify-start"
-            >
-              <div className="w-6 h-6 bg-[#1769ff] rounded-sm flex items-center justify-center">
-                <span className="text-white text-xs font-bold">B</span>
-              </div>
-              <span className="text-base sm:text-lg font-medium text-gray-700 group-hover:text-darkgray transition-colors duration-300">
-                Zeynep Seda Argut
-              </span>
-              <ExternalLink size={16} className="text-gray-400 group-hover:text-darkgray transition-colors duration-300" />
-            </a>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 transition-all duration-700">
+              {t.contact.title}
+            </h2>
+            <p className="text-center text-lg text-gray-600 transition-all duration-700 delay-100">
+              {t.contact.subtitle}
+            </p>
           </div>
 
-          {/* İletişim Formu */}
-          <div className="max-w-xl mx-auto">
-            <h3 className="text-2xl font-semibold text-center mb-8 text-darkgray">
-              {t.contact.formTitle}
-            </h3>
-            <form className="space-y-8">
-              <div
-                className={`transition-all duration-700 ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-                style={{ transitionDelay: contactSectionInView ? '200ms' : '0ms' }}
-              >
-                <label className="block text-base font-medium mb-2" htmlFor="name">{t.contact.name}</label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  placeholder={t.contact.namePlaceholder}
-                  className="w-full border-0 border-b border-gray-300 px-0 py-3 text-lg focus:outline-none focus:border-b-2 focus:border-darkgray bg-white transition-all duration-200"
-                />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            {/* Sol Taraf: İletişim Bilgileri ve Sosyal Medya */}
+            <div
+              className={`transition-all duration-700 delay-200
+                ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+              `}
+            >
+                             <h3 className="text-2xl font-semibold mb-6 text-darkgray">
+                 {t.contact.contactTitle}
+               </h3>
+               <p className="text-gray-600 mb-8 leading-relaxed">
+                 {t.contact.contactDescription}
+               </p>
+              
+              <div className="space-y-4">
+                {/* Gmail */}
+                <a
+                  href="mailto:zeynepsedaargut@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-400 hover:bg-white hover:shadow-lg transition-all duration-300"
+                >
+                  <Mail size={22} className="text-gray-500 group-hover:text-pink-500 transition-colors duration-300" />
+                  <div>
+                    <span className="font-semibold text-darkgray">E-posta</span>
+                    <p className="text-gray-500">zeynepsedaargut@gmail.com</p>
+                  </div>
+                </a>
+
+                {/* Instagram */}
+                <a
+                  href="https://www.instagram.com/zeysedargut?igsh=MW1nZDZzdmx0ZnY2aw%3D%3D&utm_source=qr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-400 hover:bg-white hover:shadow-lg transition-all duration-300"
+                >
+                  <Instagram size={22} className="text-gray-500 group-hover:text-pink-500 transition-colors duration-300" />
+                  <div>
+                    <span className="font-semibold text-darkgray">Instagram</span>
+                    <p className="text-gray-500">@zeysedargut</p>
+                  </div>
+                </a>
+
+                {/* LinkedIn */}
+                <a
+                  href="https://www.linkedin.com/in/zeynep-seda-argut?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-400 hover:bg-white hover:shadow-lg transition-all duration-300"
+                >
+                  <Linkedin size={22} className="text-gray-500 group-hover:text-blue-500 transition-colors duration-300" />
+                  <div>
+                    <span className="font-semibold text-darkgray">LinkedIn</span>
+                    <p className="text-gray-500">Zeynep Seda Argut</p>
+                  </div>
+                </a>
+
+                {/* Behance */}
+                <a
+                  href="https://www.behance.net/zeynepsedacb81"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-400 hover:bg-white hover:shadow-lg transition-all duration-300"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 group-hover:text-blue-600 transition-colors duration-300"><path d="M2.5 4.5h5M14 4.5h8M7 12h10M2.5 19.5h5M14 19.5h8"/></svg>
+                  <div>
+                    <span className="font-semibold text-darkgray">Behance</span>
+                    <p className="text-gray-500">Zeynep Seda Argut</p>
+                  </div>
+                </a>
               </div>
-              <div
-                className={`transition-all duration-700 ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-                style={{ transitionDelay: contactSectionInView ? '300ms' : '0ms' }}
-              >
-                <label className="block text-base font-medium mb-2" htmlFor="email">{t.contact.email}</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  placeholder={t.contact.emailPlaceholder}
-                  className="w-full border-0 border-b border-gray-300 px-0 py-3 text-lg focus:outline-none focus:border-b-2 focus:border-darkgray bg-white transition-all duration-200"
-                />
-              </div>
-              <div
-                className={`transition-all duration-700 ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-                style={{ transitionDelay: contactSectionInView ? '400ms' : '0ms' }}
-              >
-                <label className="block text-base font-medium mb-2" htmlFor="message">{t.contact.message}</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  placeholder={t.contact.messagePlaceholder}
-                  rows={5}
-                  className="w-full border-0 border-b border-gray-300 px-0 py-3 text-lg focus:outline-none focus:border-b-2 focus:border-darkgray bg-white resize-none transition-all duration-200"
-                />
-              </div>
-              <div
-                className={`transition-all duration-700 ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-                style={{ transitionDelay: contactSectionInView ? '500ms' : '0ms' }}
-              >
-                <button
-                type="submit"
-                className="w-full bg-darkgray text-white font-bold py-4 rounded-lg text-lg transition-all duration-300 ease-in-out flex items-center justify-center group hover:bg-gray-700 hover:shadow-lg hover:-translate-y-1"
-              >
-                {t.contact.submit}
-                <Mail size={22} className="ml-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </button>
-              </div>
-            </form>
+            </div>
+
+            {/* Sağ Taraf: İletişim Formu */}
+            <div
+              className={`bg-white p-8 md:p-12 rounded-lg shadow-lg transition-all duration-700 delay-300
+                ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+              `}
+            >
+              <h3 className="text-2xl font-semibold text-center mb-8 text-darkgray">
+                {t.contact.formTitle}
+              </h3>
+              <form className="space-y-8">
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2" htmlFor="name">{t.contact.name}</label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    placeholder={t.contact.namePlaceholder}
+                    className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg py-3 px-4 bg-gray-50 transition-all duration-200"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2" htmlFor="email">{t.contact.email}</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    placeholder={t.contact.emailPlaceholder}
+                    className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg py-3 px-4 bg-gray-50 transition-all duration-200"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2" htmlFor="message">{t.contact.message}</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    placeholder={t.contact.messagePlaceholder}
+                    rows={5}
+                    className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg py-3 px-4 bg-gray-50 resize-none transition-all duration-200"
+                  />
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    className="w-full bg-darkgray text-white font-bold py-4 rounded-lg text-lg transition-all duration-300 ease-in-out flex items-center justify-center group hover:bg-gray-800 hover:shadow-xl transform hover:-translate-y-1"
+                  >
+                    {t.contact.submit}
+                    <Mail size={22} className="ml-3 transform transition-transform duration-300 group-hover:translate-x-1" />
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </section>
