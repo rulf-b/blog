@@ -583,7 +583,7 @@ function App() {
                 >
                   <Mail size={22} className="text-gray-500 group-hover:text-pink-500 transition-colors duration-300" />
                   <div>
-                    <span className="font-semibold text-darkgray">E-posta</span>
+                                         <span className="font-semibold text-darkgray">E-mail</span>
                     <p className="text-gray-500">zeynepsedaargut@gmail.com</p>
                   </div>
                 </a>
@@ -623,7 +623,9 @@ function App() {
                   rel="noopener noreferrer"
                   className="group flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-400 hover:bg-white hover:shadow-lg transition-all duration-300"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 group-hover:text-blue-600 transition-colors duration-300"><path d="M2.5 4.5h5M14 4.5h8M7 12h10M2.5 19.5h5M14 19.5h8"/></svg>
+                                     <div className="w-6 h-6 bg-[#1769ff] rounded-sm flex items-center justify-center">
+                     <span className="text-white text-xs font-bold">Be</span>
+                   </div>
                   <div>
                     <span className="font-semibold text-darkgray">Behance</span>
                     <p className="text-gray-500">Zeynep Seda Argut</p>
