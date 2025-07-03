@@ -15,25 +15,18 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // Hakkımda animasyonları için
-  const [aboutTextRef, aboutTextInView] = useInView({ threshold: 0.2 });
-  const [aboutImgRef, aboutImgInView] = useInView({ threshold: 0.2 });
-  // Hakkımda section tamamı için
+  // Kademeli animasyonlar için useInView
+  // Hakkımda
   const [aboutSectionRef, aboutSectionInView] = useInView({ threshold: 0.15 });
-  // Hizmetler animasyonları için
-  const [servicesHeaderRef, servicesHeaderInView] = useInView({ threshold: 0.15 });
-  const [servicesGridRef, servicesGridInView] = useInView({ threshold: 0.15 });
-  // İletişim animasyonları için
-  const [contactHeaderRef, contactHeaderInView] = useInView({ threshold: 0.15 });
-  const [contactBoxRef, contactBoxInView] = useInView({ threshold: 0.15 });
-  // Footer animasyonu için
-  const [footerRef, footerInView] = useInView({ threshold: 0.1 });
+  // Hizmetler
+  const [servicesSectionRef, servicesSectionInView] = useInView({ threshold: 0.15 });
+  // İletişim
+  const [contactSectionRef, contactSectionInView] = useInView({ threshold: 0.15 });
 
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 400);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -135,44 +128,60 @@ function App() {
       <section
         id="hakkimda"
         ref={aboutSectionRef}
-        className={`py-20 lg:py-32 bg-white text-darkgray transition-all duration-1000 ease-out
-          ${aboutSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-        `}
+        className="py-20 lg:py-32 bg-white text-darkgray"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Profil Fotoğrafı */}
             <div
-              ref={aboutImgRef}
-              className={`order-1 lg:order-1 flex justify-center transition-all duration-1000 ease-out
-                ${aboutImgInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-16'}
+              className={`order-1 lg:order-1 flex justify-center transition-all duration-700
+                ${aboutSectionInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}
               `}
+              style={{ transitionDelay: aboutSectionInView ? '0ms' : '0ms' }}
             >
               <div className="w-80 h-80 bg-gray-200 rounded-full flex items-center justify-center group transition-all duration-300">
                 <img 
-                  src="/pp.png" 
+                  src="/pp.png"
                   alt="Profile"
                   className="w-full h-full object-cover rounded-full transition-all duration-300 group-hover:scale-105 group-hover:shadow-2xl"
                 />
               </div>
             </div>
-            <div
-              ref={aboutTextRef}
-              className={`order-2 lg:order-2 transition-all duration-1000 ease-out
-                ${aboutTextInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-16'}
-              `}
-            >
-              <h3 className="text-3xl md:text-4xl font-light mb-8 tracking-tight">
+            {/* Hakkımda Başlık ve Paragraflar */}
+            <div className="order-2 lg:order-2">
+              <h3
+                className={`text-3xl md:text-4xl font-light mb-8 tracking-tight transition-all duration-700
+                  ${aboutSectionInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}
+                  delay-100
+                `}
+                style={{ transitionDelay: aboutSectionInView ? '100ms' : '0ms' }}
+              >
                 Hakkımda
               </h3>
               <div className="space-y-6 text-darkgray max-w-[700px] mx-auto">
-                <p className="text-lg leading-[1.7]">
+                <p
+                  className={`text-lg leading-[1.7] transition-all duration-700
+                    ${aboutSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+                  `}
+                  style={{ transitionDelay: aboutSectionInView ? '250ms' : '0ms' }}
+                >
                   Merhaba, ben <strong>Zeynep Seda Argut</strong>.
-Görsel iletişim tasarımı alanındaki eğitimimle başlayan yolculuğumda; yaratıcı fikir üretimi, kampanya tasarımı, marka iletişimi, <strong>sosyal medya yönetimi</strong> ve <strong>sanat yönetimi</strong> gibi alanlarda aktif olarak çalıştım. Moda, yaşam stili ve kurumsal iletişim gibi farklı sektörlerde edindiğim deneyimlerle tasarım dilimi geliştirdim. Her projede hem <strong>stratejik</strong> hem de <strong>estetik</strong> bir bakış açısıyla üretmeye odaklandım. Tasarım sürecinde fikrin yön belirleyici olduğuna inanıyor, güçlü bir fikrin olmadığı yerde estetiğin de anlamını yitirdiğini düşünüyorum.
+                  Görsel iletişim tasarımı alanındaki eğitimimle başlayan yolculuğumda; yaratıcı fikir üretimi, kampanya tasarımı, marka iletişimi, <strong>sosyal medya yönetimi</strong> ve <strong>sanat yönetimi</strong> gibi alanlarda aktif olarak çalıştım. Moda, yaşam stili ve kurumsal iletişim gibi farklı sektörlerde edindiğim deneyimlerle tasarım dilimi geliştirdim. Her projede hem <strong>stratejik</strong> hem de <strong>estetik</strong> bir bakış açısıyla üretmeye odaklandım. Tasarım sürecinde fikrin yön belirleyici olduğuna inanıyor, güçlü bir fikrin olmadığı yerde estetiğin de anlamını yitirdiğini düşünüyorum.
                 </p>
-                <p className="text-lg leading-[1.7]">
+                <p
+                  className={`text-lg leading-[1.7] transition-all duration-700
+                    ${aboutSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+                  `}
+                  style={{ transitionDelay: aboutSectionInView ? '400ms' : '0ms' }}
+                >
                   Tasarımı yalnızca görsel bir ifade biçimi değil, aynı zamanda çözüm üreten ve dönüşüm sağlayan bir araç olarak görüyorum. Kreatif metin yazarlığı, moodboard ve <strong>çekim konsepti geliştirme</strong> gibi alanlarda da üretmeye devam ediyorum. Gelecekteki hedefim; tasarım pratiğimi <strong>yapay zeka</strong> ve <strong>yaratıcı teknolojilerle</strong> entegre ederek dönüştürmek.
                 </p>
-                <p className="text-lg leading-[1.7]">
+                <p
+                  className={`text-lg leading-[1.7] transition-all duration-700
+                    ${aboutSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+                  `}
+                  style={{ transitionDelay: aboutSectionInView ? '550ms' : '0ms' }}
+                >
                   Değişen dünyaya adapte olma süreci beni heyecanlandırıyor; bu dönüşümün içinde aktif kalmayı önemsiyorum.
                 </p>
               </div>
@@ -181,70 +190,72 @@ Görsel iletişim tasarımı alanındaki eğitimimle başlayan yolculuğumda; ya
         </div>
       </section>
 
-      {/* Services Section - Redesigned to match reference */}
-      <section id="hizmetlerim" className="py-24 bg-white text-darkgray min-h-[80vh] flex items-center justify-center">
+      {/* Services Section */}
+      <section
+        id="hizmetlerim"
+        ref={servicesSectionRef}
+        className="py-24 bg-white text-darkgray min-h-[80vh] flex items-center justify-center"
+      >
         <div className="w-full max-w-[1200px] mx-auto bg-white rounded-[12px] shadow-none px-0 md:px-0 py-0 md:py-0 border-none">
-          {/* Header with capabilities tag */}
-          <div
-            ref={servicesHeaderRef}
-            className={`text-center mb-20 transition-all duration-1000 ease-out
-              ${servicesHeaderInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-            `}
-          >
-            <h3 className="text-5xl md:text-6xl font-normal mb-6 tracking-tight leading-none uppercase">
+          <div className="text-center mb-20">
+            <h3
+              className={`text-5xl md:text-6xl font-normal mb-6 tracking-tight leading-none uppercase transition-all duration-700
+                ${servicesSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+              `}
+              style={{ transitionDelay: servicesSectionInView ? '0ms' : '0ms' }}
+            >
               Birlikte neler yapabiliriz ?
             </h3>
           </div>
-          
-          {/* Services Grid */}
           <div
-            ref={servicesGridRef}
-            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-16 px-10 pb-24 transition-all duration-1000 ease-out
-              ${servicesGridInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-16 px-10 pb-24 transition-all duration-700
+              ${servicesSectionInView ? 'opacity-100' : 'opacity-0'}
             `}
           >
-            {/* Service 1 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-11/12 h-px bg-gray-300 mb-6 mx-auto"></div>
-              <h4 className="text-2xl font-semibold mb-3 tracking-tight leading-tight">
-                Görsel Dünya ve Konsept Geliştirme
-              </h4>
-            </div>
-            {/* Service 2 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-11/12 h-px bg-gray-300 mb-6 mx-auto"></div>
-              <h4 className="text-2xl font-semibold mb-3 tracking-tight leading-tight">
-                Kreatif İçerik Üretimi
-              </h4>
-            </div>
-            {/* Service 3 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-11/12 h-px bg-gray-300 mb-6 mx-auto"></div>
-              <h4 className="text-2xl font-semibold mb-3 tracking-tight leading-tight">
-                Sosyal Medya Tasarımı ve Yönetimi
-              </h4>
-            </div>
-            {/* Service 4 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-11/12 h-px bg-gray-300 mb-6 mx-auto"></div>
-              <h4 className="text-2xl font-semibold mb-3 tracking-tight leading-tight">
-                Marka Stratejisi ve İletişim Dili Oluşturma
-              </h4>
-            </div>
-            {/* Service 5 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-11/12 h-px bg-gray-300 mb-6 mx-auto"></div>
-              <h4 className="text-2xl font-semibold mb-3 tracking-tight leading-tight">
-                Kurumsal Kimlik Tasarımı
-              </h4>
+            {[
+              {
+                title: 'Görsel Dünya ve Konsept Geliştirme',
+                desc: 'Markanın hikayesini yansıtan özgün görsel kurgu ve yaratıcı konseptler.'
+              },
+              {
+                title: 'Kreatif İçerik Üretimi',
+                desc: 'Dijital platformlara uygun, estetik ve stratejik içerikler.'
+              },
+              {
+                title: 'Sosyal Medya Tasarımı ve Yönetimi',
+                desc: 'Markaya özel sosyal medya kurgusu, tasarımı ve içerik planlaması.'
+              },
+              {
+                title: 'Marka Stratejisi ve İletişim Dili Oluşturma',
+                desc: 'Tutarlı bir marka kimligi için stratejik yaklaşım ve etkili iletişim dili.'
+              },
+              {
+                title: 'Kurumsal Kimlik Tasarımı',
+                desc: 'Logo, renk, tipografi ve uygulamalarla butunluklu görsel kimlik oluşturma.'
+              },
+              {
+                title: 'İsimlendirme ve Logo Tasarımı',
+                desc: 'Marka degerlerini yansıtan isim ve güçlü bir ilk izlenim için logo tasarımı.'
+              }
+            ].map((item, idx) => (
+              <div
+                key={item.title}
+                className={`flex flex-col items-center text-center group relative transition-all duration-700
+                  ${servicesSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+                `}
+                style={{ transitionDelay: servicesSectionInView ? `${150 + idx * 100}ms` : '0ms' }}
+              >
+                <div className="w-11/12 h-px bg-gray-300 mb-6 mx-auto"></div>
+                <h4 className="text-2xl font-semibold mb-3 tracking-tight leading-tight cursor-pointer">
+                  {item.title}
+                </h4>
+                <div className="min-h-[64px] flex items-start justify-center">
+                  <p className="text-gray-400 italic text-base mt-1 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 -translate-y-2 transition-all duration-300">
+                    {item.desc}
+                  </p>
+                </div>
               </div>
-            {/* Service 6 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-11/12 h-px bg-gray-300 mb-6 mx-auto"></div>
-              <h4 className="text-2xl font-semibold mb-3 tracking-tight leading-tight">
-                İsimlendirme ve Logo Tasarımı
-              </h4>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -252,60 +263,72 @@ Görsel iletişim tasarımı alanındaki eğitimimle başlayan yolculuğumda; ya
       {/* İletişim Formu Sadece */}
       <section
         id="iletisim"
-        ref={contactHeaderRef}
-        className={`py-20 lg:py-32 bg-white text-darkgray transition-all duration-500 ease-out
-          ${contactHeaderInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+        ref={contactSectionRef}
+        className={`py-20 lg:py-32 bg-white text-darkgray transition-all duration-700
+          ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
         `}
       >
         <div className="max-w-xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">İletişim</h2>
-          <p className="text-center text-lg text-gray-500 mb-10">Aşağıdaki formu doldurarak bana ulaşabilirsin!</p>
-          <form
-            className="space-y-8"
-            onSubmit={e => {
-              e.preventDefault();
-              alert('Mesajınız gönderildi!');
-            }}
-          >
-            <div>
-              <label className="block text-xl font-semibold mb-2" htmlFor="name">Adınız *</label>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 transition-all duration-700">
+            İletişim
+          </h2>
+          <p className="text-center text-lg text-gray-500 mb-10 transition-all duration-700">
+            Aşağıdaki formu doldurarak bana ulaşabilirsin!
+          </p>
+          <form className="space-y-8">
+            <div
+              className={`transition-all duration-700 ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              style={{ transitionDelay: contactSectionInView ? '150ms' : '0ms' }}
+            >
+              <label className="block text-base font-medium mb-2" htmlFor="name">Adınız *</label>
               <input
                 id="name"
                 name="name"
                 type="text"
                 required
                 placeholder="Adınız..."
-                className="w-full border border-gray-300 rounded-md px-4 py-3 text-lg focus:outline-none focus:border-darkgray bg-white"
+                className="w-full border-0 border-b border-gray-300 px-0 py-3 text-lg focus:outline-none focus:border-b-2 focus:border-darkgray bg-white transition-all duration-200"
               />
             </div>
-            <div>
-              <label className="block text-xl font-semibold mb-2" htmlFor="email">E-posta Adresiniz *</label>
+            <div
+              className={`transition-all duration-700 ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              style={{ transitionDelay: contactSectionInView ? '250ms' : '0ms' }}
+            >
+              <label className="block text-base font-medium mb-2" htmlFor="email">E-posta Adresiniz *</label>
               <input
                 id="email"
                 name="email"
                 type="email"
                 required
                 placeholder="E-posta adresiniz..."
-                className="w-full border border-gray-300 rounded-md px-4 py-3 text-lg focus:outline-none focus:border-darkgray bg-white"
+                className="w-full border-0 border-b border-gray-300 px-0 py-3 text-lg focus:outline-none focus:border-b-2 focus:border-darkgray bg-white transition-all duration-200"
               />
             </div>
-            <div>
-              <label className="block text-xl font-semibold mb-2" htmlFor="message">Mesajınız *</label>
+            <div
+              className={`transition-all duration-700 ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              style={{ transitionDelay: contactSectionInView ? '350ms' : '0ms' }}
+            >
+              <label className="block text-base font-medium mb-2" htmlFor="message">Mesajınız *</label>
               <textarea
                 id="message"
                 name="message"
                 required
                 placeholder="Mesajınız..."
                 rows={5}
-                className="w-full border border-gray-300 rounded-md px-4 py-3 text-lg focus:outline-none focus:border-darkgray bg-white resize-none"
+                className="w-full border-0 border-b border-gray-300 px-0 py-3 text-lg focus:outline-none focus:border-b-2 focus:border-darkgray bg-white resize-none transition-all duration-200"
               />
             </div>
-            <button
-              type="submit"
-              className="w-full border-2 border-darkgray text-darkgray font-bold py-3 rounded-md hover:bg-darkgray hover:text-white transition-colors duration-200 text-lg"
+            <div
+              className={`transition-all duration-700 ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              style={{ transitionDelay: contactSectionInView ? '450ms' : '0ms' }}
             >
-              Mesajımı Gönder!
-            </button>
+              <button
+                type="submit"
+                className="w-full bg-darkgray text-white font-bold py-3 rounded-md text-lg transition-all duration-200 hover:brightness-110 hover:scale-105"
+              >
+                Mesajımı Gönder!
+              </button>
+            </div>
           </form>
         </div>
       </section>
