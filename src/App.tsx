@@ -623,7 +623,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="group flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-400 hover:bg-white hover:shadow-lg transition-all duration-300"
                 >
-                                     <div className="w-6 h-6 bg-[#1769ff] rounded-sm flex items-center justify-center">
+                                     <div className="w-6 h-6 bg-gray-500 group-hover:bg-[#1769ff] rounded-sm flex items-center justify-center transition-colors duration-300">
                      <span className="text-white text-xs font-bold">Be</span>
                    </div>
                   <div>
