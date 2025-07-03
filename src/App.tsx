@@ -18,6 +18,7 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [language, setLanguage] = useState<'tr' | 'en'>('tr');
+  const [emailCopied, setEmailCopied] = useState(false);
 
   // Çeviri objeleri
   const translations = {
@@ -77,7 +78,8 @@ function App() {
         submit: 'Mesajımı Gönder!',
         namePlaceholder: 'Adınız...',
         emailPlaceholder: 'E-posta adresiniz...',
-        messagePlaceholder: 'Mesajınız...'
+        messagePlaceholder: 'Mesajınız...',
+        copied: 'Kopyalandı!'
       },
       footer: {
         copyright: '© 2025 Zeynep Seda Argut. Tüm Hakları Saklıdır.'
@@ -139,7 +141,8 @@ function App() {
         submit: 'Send My Message!',
         namePlaceholder: 'Your name...',
         emailPlaceholder: 'Your email...',
-        messagePlaceholder: 'Your message...'
+        messagePlaceholder: 'Your message...',
+        copied: 'Copied!'
       },
       footer: {
         copyright: '© 2025 Zeynep Seda Argut. All Rights Reserved.'
@@ -175,6 +178,16 @@ function App() {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const copyEmailToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText('zeynepsedaargut@gmail.com');
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000);
+    } catch (err) {
+      console.error('E-posta kopyalanamadı:', err);
+    }
   };
 
   // Interactive Canvas Section
@@ -574,19 +587,20 @@ function App() {
                </p>
               
               <div className="space-y-4">
-                {/* Gmail */}
-                <a
-                  href="mailto:zeynepsedaargut@gmail.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-400 hover:bg-white hover:shadow-lg transition-all duration-300"
+                                {/* Gmail */}
+                <button
+                  onClick={copyEmailToClipboard}
+                  className="group flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-400 hover:bg-white hover:shadow-lg transition-all duration-300 w-full text-left"
                 >
                   <Mail size={22} className="text-gray-500 group-hover:text-pink-500 transition-colors duration-300" />
-                  <div>
-                                         <span className="font-semibold text-darkgray">E-mail</span>
+                  <div className="flex-1">
+                    <span className="font-semibold text-darkgray">E-mail</span>
                     <p className="text-gray-500">zeynepsedaargut@gmail.com</p>
                   </div>
-                </a>
+                  {emailCopied && (
+                    <span className="text-green-600 text-sm font-medium">{t.contact.copied}</span>
+                  )}
+                </button>
 
                 {/* Instagram */}
                 <a
