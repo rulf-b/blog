@@ -43,6 +43,116 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Interactive Canvas Section
+  const InteractiveCanvas: React.FC = () => {
+    const canvasRef = React.useRef<HTMLCanvasElement>(null);
+    const particlesRef = React.useRef<any[]>([]);
+    const palette = [
+      [255, 107, 107], // Canlı Mercan
+      [78, 205, 196],  // Orta Turkuaz
+      [247, 184, 1],   // Safran
+      [69, 183, 209],  // Pasifik Mavisi
+      [250, 208, 44],   // Mimoza
+    ];
+
+    React.useEffect(() => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      let animationFrameId: number;
+
+      const resizeCanvas = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight * 0.9;
+      };
+      
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      const handleMouseMove = (e: MouseEvent) => {
+        const x = e.clientX;
+        const y = e.clientY - canvas.getBoundingClientRect().top;
+        const color = palette[Math.floor(Math.random() * palette.length)];
+        particlesRef.current.push({
+          x,
+          y,
+          size: Math.random() * 20 + 10, // Fırça darbesi boyutu
+          opacity: 1,
+          color: `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${Math.random() * 0.1 + 0.05})`,
+          vx: 0,
+          vy: 0,
+        });
+      };
+
+      const handleMouseClick = (e: MouseEvent) => {
+        const x = e.clientX;
+        const y = e.clientY - canvas.getBoundingClientRect().top;
+        for (let i = 0; i < 30; i++) { // 30 parçacık oluştur
+          const color = palette[Math.floor(Math.random() * palette.length)];
+          particlesRef.current.push({
+            x,
+            y,
+            size: Math.random() * 10 + 5,
+            opacity: 1,
+            color: `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.7)`,
+            vx: (Math.random() - 0.5) * (Math.random() * 6),
+            vy: (Math.random() - 0.5) * (Math.random() * 6),
+          });
+        }
+      };
+
+      const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        for (let i = 0; i < particlesRef.current.length; i++) {
+          const p = particlesRef.current[i];
+          p.opacity -= 0.015; // Solma hızı
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.opacity <= 0) {
+            particlesRef.current.splice(i, 1);
+            i--;
+            continue;
+          }
+          
+          ctx.globalAlpha = p.opacity;
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        
+        ctx.globalAlpha = 1;
+        animationFrameId = requestAnimationFrame(animate);
+      };
+
+      canvas.addEventListener('mousemove', handleMouseMove);
+      canvas.addEventListener('click', handleMouseClick);
+      animate();
+
+      return () => {
+        window.removeEventListener('resize', resizeCanvas);
+        canvas.removeEventListener('mousemove', handleMouseMove);
+        canvas.removeEventListener('click', handleMouseClick);
+        cancelAnimationFrame(animationFrameId);
+      };
+    }, []);
+
+    return (
+      <section className="relative w-full h-[90vh] min-h-[600px] flex items-center justify-center bg-white overflow-hidden">
+        <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full cursor-none" />
+        <div className="relative z-10 w-full flex flex-col items-center justify-center pointer-events-none">
+          <h1 className="text-darkgray text-4xl md:text-6xl font-light text-center max-w-3xl mx-auto">
+            Her yüzey bir hikaye anlatır.
+          </h1>
+        </div>
+      </section>
+    );
+  };
+
   return (
     <div className="font-sans bg-white text-darkgray">
       {/* Navigation */}
@@ -112,17 +222,8 @@ function App() {
         )}
       </nav>
 
-      {/* Hero Section */}
-      <section className="min-h-screen bg-white flex items-center justify-center px-6 text-darkgray">
-        <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-light tracking-tight mb-6">
-            [Adınız Soyadınız]
-          </h1>
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-darkgray tracking-wide">
-            [Mesleğiniz / Unvanınız]
-          </h2>
-        </div>
-      </section>
+      {/* Interactive Canvas Section */}
+      <InteractiveCanvas />
 
       {/* About Me Section */}
       <section
@@ -248,12 +349,12 @@ function App() {
                 <div className="w-11/12 h-px bg-gray-300 mb-6 mx-auto"></div>
                 <h4 className="text-2xl font-semibold mb-3 tracking-tight leading-tight cursor-pointer">
                   {item.title}
-                </h4>
+              </h4>
                 <div className="min-h-[64px] flex items-start justify-center">
                   <p className="text-gray-400 italic text-base mt-1 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 -translate-y-2 transition-all duration-300">
                     {item.desc}
-                  </p>
-                </div>
+              </p>
+            </div>
               </div>
             ))}
           </div>
@@ -328,7 +429,7 @@ function App() {
               >
                 Mesajımı Gönder!
               </button>
-            </div>
+          </div>
           </form>
         </div>
       </section>
