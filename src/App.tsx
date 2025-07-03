@@ -33,9 +33,9 @@ function App() {
       },
       about: {
         title: 'Hakkımda',
-        p1: 'Merhaba, ben Zeynep Seda Argut. Görsel iletişim tasarımı alanındaki eğitimimle başlayan yolculuğumda; yaratıcı fikir üretimi, kampanya tasarımı, marka iletişimi, sosyal medya yönetimi ve sanat yönetimi gibi alanlarda aktif olarak çalıştım. Moda, yaşam stili ve kurumsal iletişim gibi farklı sektörlerde edindiğim deneyimlerle tasarım dilimi geliştirdim. Her projede hem stratejik hem de estetik bir bakış açısıyla üretmeye odaklandım. Tasarım sürecinde fikrin yön belirleyici olduğuna inanıyor, güçlü bir fikrin olmadığı yerde estetiğin de anlamını yitirdiğini düşünüyorum.',
-        p2: 'Tasarımı yalnızca görsel bir ifade biçimi değil, aynı zamanda çözüm üreten ve dönüşüm sağlayan bir araç olarak görüyorum. Kreatif metin yazarlığı, moodboard ve çekim konsepti geliştirme gibi alanlarda da üretmeye devam ediyorum. Gelecekteki hedefim; tasarım pratiğimi yapay zeka ve yaratıcı teknolojilerle entegre ederek dönüştürmek.',
-        p3: 'Değişen dünyaya adapte olma süreci beni heyecanlandırıyor; bu dönüşümün içinde aktif kalmayı önemsiyorum.'
+        p1: 'Merhaba, ben <strong>Zeynep Seda Argut</strong>. Görsel iletişim tasarımı alanındaki eğitimimle başlayan yolculuğumda; yaratıcı fikir üretimi, kampanya tasarımı, <strong>marka iletişimi</strong>, sosyal medya yönetimi ve <strong>sanat yönetimi</strong> gibi alanlarda aktif olarak çalıştım. Moda, yaşam stili ve kurumsal iletişim gibi farklı sektörlerde edindiğim deneyimlerle tasarım dilimi geliştirdim. Her projede hem <strong>stratejik</strong> hem de estetik bir bakış açısıyla üretmeye odaklandım. Tasarım sürecinde fikrin yön belirleyici olduğuna inanıyor, <strong>güçlü bir fikrin</strong> olmadığı yerde estetiğin de anlamını yitirdiğini düşünüyorum.',
+        p2: 'Tasarımı yalnızca görsel bir ifade biçimi değil, aynı zamanda <strong>çözüm üreten ve dönüşüm sağlayan</strong> bir araç olarak görüyorum. Kreatif metin yazarlığı, moodboard ve <strong>çekim konsepti geliştirme</strong> gibi alanlarda da üretmeye devam ediyorum. Gelecekteki hedefim; tasarım pratiğimi <strong>yapay zeka</strong> ve <strong>yaratıcı teknolojilerle</strong> entegre ederek dönüştürmek.',
+        p3: 'Değişen dünyaya adapte olma süreci beni heyecanlandırıyor; bu dönüşümün içinde <strong>aktif kalmayı</strong> önemsiyorum.'
       },
       services: {
         title: 'Birlikte neler yapabiliriz ?',
@@ -96,9 +96,9 @@ function App() {
       },
       about: {
         title: 'About Me',
-        p1: 'Hello, I am Zeynep Seda Argut. In my journey that began with my education in visual communication design; I have actively worked in areas such as creative idea generation, campaign design, brand communication, social media management and art direction. I developed my design language with the experiences I gained in different sectors such as fashion, lifestyle and corporate communication. In every project, I focused on producing with both strategic and aesthetic perspectives. I believe that the idea is the guiding direction in the design process, and I think that aesthetics loses its meaning where there is no strong idea.',
-        p2: 'I see design not only as a visual form of expression, but also as a tool that produces solutions and provides transformation. I continue to produce in areas such as creative copywriting, moodboard and shooting concept development. My future goal is to transform my design practice by integrating it with artificial intelligence and creative technologies.',
-        p3: 'The process of adapting to the changing world excites me; I care about staying active in this transformation.'
+        p1: 'Hello, I am <strong>Zeynep Seda Argut</strong>. In my journey that began with my education in visual communication design; I have actively worked in areas such as creative idea generation, campaign design, <strong>brand communication</strong>, social media management and <strong>art direction</strong>. I developed my design language with the experiences I gained in different sectors such as fashion, lifestyle and corporate communication. In every project, I focused on producing with both <strong>strategic</strong> and aesthetic perspectives. I believe that the idea is the guiding direction in the design process, and I think that aesthetics loses its meaning where there is no <strong>strong idea</strong>.',
+        p2: 'I see design not only as a visual form of expression, but also as a tool that <strong>produces solutions and provides transformation</strong>. I continue to produce in areas such as creative copywriting, moodboard and <strong>shooting concept development</strong>. My future goal is to transform my design practice by integrating it with <strong>artificial intelligence</strong> and <strong>creative technologies</strong>.',
+        p3: 'The process of adapting to the changing world excites me; I care about <strong>staying active</strong> in this transformation.'
       },
       services: {
         title: 'What can we do together?',
@@ -484,25 +484,22 @@ function App() {
                     ${aboutSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
                   `}
                   style={{ transitionDelay: aboutSectionInView ? '250ms' : '0ms' }}
-                >
-                  {t.about.p1}
-                </p>
+                  dangerouslySetInnerHTML={{ __html: t.about.p1 }}
+                />
                 <p
                   className={`text-lg leading-[1.7] transition-all duration-700
                     ${aboutSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
                   `}
                   style={{ transitionDelay: aboutSectionInView ? '400ms' : '0ms' }}
-                >
-                  {t.about.p2}
-                </p>
+                  dangerouslySetInnerHTML={{ __html: t.about.p2 }}
+                />
                 <p
                   className={`text-lg leading-[1.7] transition-all duration-700
                     ${aboutSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
                   `}
                   style={{ transitionDelay: aboutSectionInView ? '550ms' : '0ms' }}
-                >
-                  {t.about.p3}
-                </p>
+                  dangerouslySetInnerHTML={{ __html: t.about.p3 }}
+                />
               </div>
             </div>
           </div>
@@ -652,54 +649,75 @@ function App() {
 
             {/* Sağ Taraf: İletişim Formu */}
             <div
-              className={`bg-white p-8 md:p-12 rounded-lg shadow-lg transition-all duration-700 delay-300
+              className={`bg-white p-8 md:p-12 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-700 delay-300
                 ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
               `}
             >
-              <h3 className="text-2xl font-semibold text-center mb-8 text-darkgray">
+              <h3 className="text-3xl font-light text-center mb-8 text-darkgray tracking-tight">
                 {t.contact.formTitle}
               </h3>
               <form className="space-y-8">
-                <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2" htmlFor="name">{t.contact.name}</label>
+                {/* Name Input */}
+                <div className="relative">
                   <input
                     id="name"
                     name="name"
                     type="text"
                     required
-                    placeholder={t.contact.namePlaceholder}
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg py-3 px-4 bg-gray-50 transition-all duration-200"
+                    className="block w-full px-4 py-3 text-lg text-darkgray bg-transparent border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-0 focus:border-pink-500 peer transition-colors duration-300"
+                    placeholder=" "
                   />
+                  <label
+                    htmlFor="name"
+                    className="absolute text-gray-500 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] bg-white px-2 left-2 peer-focus:px-2 peer-focus:text-pink-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-1/2 peer-focus:top-4 peer-focus:scale-75 peer-focus:-translate-y-4"
+                  >
+                    {t.contact.name}
+                  </label>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2" htmlFor="email">{t.contact.email}</label>
+
+                {/* Email Input */}
+                <div className="relative">
                   <input
                     id="email"
                     name="email"
                     type="email"
                     required
-                    placeholder={t.contact.emailPlaceholder}
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg py-3 px-4 bg-gray-50 transition-all duration-200"
+                    className="block w-full px-4 py-3 text-lg text-darkgray bg-transparent border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-0 focus:border-pink-500 peer transition-colors duration-300"
+                    placeholder=" "
                   />
+                  <label
+                    htmlFor="email"
+                    className="absolute text-gray-500 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] bg-white px-2 left-2 peer-focus:px-2 peer-focus:text-pink-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-1/2 peer-focus:top-4 peer-focus:scale-75 peer-focus:-translate-y-4"
+                  >
+                    {t.contact.email}
+                  </label>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2" htmlFor="message">{t.contact.message}</label>
+
+                {/* Message Textarea */}
+                <div className="relative">
                   <textarea
                     id="message"
                     name="message"
                     required
-                    placeholder={t.contact.messagePlaceholder}
                     rows={5}
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-lg py-3 px-4 bg-gray-50 resize-none transition-all duration-200"
+                    className="block w-full px-4 py-3 text-lg text-darkgray bg-transparent border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-0 focus:border-pink-500 peer resize-none transition-colors duration-300"
+                    placeholder=" "
                   />
+                  <label
+                    htmlFor="message"
+                    className="absolute text-gray-500 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] bg-white px-2 left-2 peer-focus:px-2 peer-focus:text-pink-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:top-5 peer-focus:top-4 peer-focus:scale-75 peer-focus:-translate-y-4"
+                  >
+                    {t.contact.message}
+                  </label>
                 </div>
-                <div>
+
+                <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full bg-darkgray text-white font-bold py-4 rounded-lg text-lg transition-all duration-300 ease-in-out flex items-center justify-center group hover:bg-gray-800 hover:shadow-xl transform hover:-translate-y-1"
+                    className="w-full bg-darkgray text-white font-bold py-4 rounded-lg text-lg transition-all duration-300 ease-in-out flex items-center justify-center group hover:bg-gradient-to-r hover:from-pink-500 hover:to-red-500 hover:shadow-xl transform hover:-translate-y-1"
                   >
                     {t.contact.submit}
-                    <Mail size={22} className="ml-3 transform transition-transform duration-300 group-hover:translate-x-1" />
+                    <Mail size={22} className="ml-3 transform transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
                   </button>
                 </div>
               </form>
