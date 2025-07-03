@@ -147,11 +147,11 @@ function App() {
                 ${aboutImgInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-16'}
               `}
             >
-              <div className="w-80 h-80 bg-gray-200 rounded-full flex items-center justify-center">
+              <div className="w-80 h-80 bg-gray-200 rounded-full flex items-center justify-center group transition-all duration-300">
                 <img 
-                  src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=800" 
+                  src="/pp.png" 
                   alt="Profile"
-                  className="w-full h-full object-cover rounded-full"
+                  className="w-full h-full object-cover rounded-full transition-all duration-300 group-hover:scale-105 group-hover:shadow-2xl"
                 />
               </div>
             </div>
@@ -164,15 +164,15 @@ function App() {
               <h3 className="text-3xl md:text-4xl font-light mb-8 tracking-tight">
                 Hakkımda
               </h3>
-              <div className="space-y-6 text-darkgray leading-relaxed">
-                <p className="text-lg">
-                  Merhaba, ben Zeynep Seda Argut.
-Görsel iletişim tasarımı alanındaki eğitimimle başlayan yolculuğumda; yaratıcı fikir üretimi, kampanya tasarımı, marka iletişimi, sosyal medya yönetimi ve sanat yönetimi gibi alanlarda aktif olarak çalıştım. Moda, yaşam stili ve kurumsal iletişim gibi farklı sektörlerde edindiğim deneyimlerle tasarım dilimi geliştirdim. Her projede hem stratejik hem de estetik bir bakış açısıyla üretmeye odaklandım. Tasarım sürecinde fikrin yön belirleyici olduğuna inanıyor, güçlü bir fikrin olmadığı yerde estetiğin de anlamını yitirdiğini düşünüyorum.
+              <div className="space-y-6 text-darkgray max-w-[700px] mx-auto">
+                <p className="text-lg leading-[1.7]">
+                  Merhaba, ben <strong>Zeynep Seda Argut</strong>.
+Görsel iletişim tasarımı alanındaki eğitimimle başlayan yolculuğumda; yaratıcı fikir üretimi, kampanya tasarımı, marka iletişimi, <strong>sosyal medya yönetimi</strong> ve <strong>sanat yönetimi</strong> gibi alanlarda aktif olarak çalıştım. Moda, yaşam stili ve kurumsal iletişim gibi farklı sektörlerde edindiğim deneyimlerle tasarım dilimi geliştirdim. Her projede hem <strong>stratejik</strong> hem de <strong>estetik</strong> bir bakış açısıyla üretmeye odaklandım. Tasarım sürecinde fikrin yön belirleyici olduğuna inanıyor, güçlü bir fikrin olmadığı yerde estetiğin de anlamını yitirdiğini düşünüyorum.
                 </p>
-                <p className="text-lg">
-                  Tasarımı yalnızca görsel bir ifade biçimi değil, aynı zamanda çözüm üreten ve dönüşüm sağlayan bir araç olarak görüyorum. Kreatif metin yazarlığı, moodboard ve çekim konsepti geliştirme gibi alanlarda da üretmeye devam ediyorum. Gelecekteki hedefim; tasarım pratiğimi yapay zeka ve yaratıcı teknolojilerle entegre ederek dönüştürmek.
+                <p className="text-lg leading-[1.7]">
+                  Tasarımı yalnızca görsel bir ifade biçimi değil, aynı zamanda çözüm üreten ve dönüşüm sağlayan bir araç olarak görüyorum. Kreatif metin yazarlığı, moodboard ve <strong>çekim konsepti geliştirme</strong> gibi alanlarda da üretmeye devam ediyorum. Gelecekteki hedefim; tasarım pratiğimi <strong>yapay zeka</strong> ve <strong>yaratıcı teknolojilerle</strong> entegre ederek dönüştürmek.
                 </p>
-                <p className="text-lg">
+                <p className="text-lg leading-[1.7]">
                   Değişen dünyaya adapte olma süreci beni heyecanlandırıyor; bu dönüşümün içinde aktif kalmayı önemsiyorum.
                 </p>
               </div>
@@ -191,15 +191,9 @@ Görsel iletişim tasarımı alanındaki eğitimimle başlayan yolculuğumda; ya
               ${servicesHeaderInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
             `}
           >
-            <div className="inline-flex items-center px-4 py-1 border border-gray-400 rounded-full text-xs font-medium text-black tracking-widest mb-8 uppercase bg-white">
-              + YETENEKLERİM
-            </div>
             <h3 className="text-5xl md:text-6xl font-normal mb-6 tracking-tight leading-none uppercase">
               Birlikte neler yapabiliriz ?
             </h3>
-            <p className="text-gray-700 text-base max-w-2xl mx-auto leading-relaxed font-normal">
-              Studio 47 is a web design studio known for its innovative and customized approach to web development. Specializing in creating visually appealing and highly functional websites, Studio 47 caters to a wide range of clients, from small businesses to large enterprises, ensuring each project is tailored to meet the specific needs and goals of the client.
-            </p>
           </div>
           
           {/* Services Grid */}
@@ -243,7 +237,7 @@ Görsel iletişim tasarımı alanındaki eğitimimle başlayan yolculuğumda; ya
               <h4 className="text-2xl font-semibold mb-3 tracking-tight leading-tight">
                 Kurumsal Kimlik Tasarımı
               </h4>
-            </div>
+              </div>
             {/* Service 6 */}
             <div className="flex flex-col items-center text-center">
               <div className="w-11/12 h-px bg-gray-300 mb-6 mx-auto"></div>
@@ -255,43 +249,14 @@ Görsel iletişim tasarımı alanındaki eğitimimle başlayan yolculuğumda; ya
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="iletisim" className="py-20 lg:py-32 bg-white text-darkgray">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h3
-            ref={contactHeaderRef}
-            className={`text-3xl md:text-4xl font-light mb-6 tracking-tight transition-all duration-1000 ease-out
-              ${contactHeaderInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-            `}
-          >
-            Birlikte Neler Yapabiliriz?
-          </h3>
-          <p
-            className={`text-xl text-gray-600 mb-12 leading-relaxed transition-all duration-1000 ease-out
-              ${contactHeaderInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-            `}
-          >
-            Yeni projeler veya iş birlikleri için benimle iletişime geçin.
-          </p>
-          <div
-            ref={contactBoxRef}
-            className={`inline-flex items-center justify-center p-6 bg-gray-50 rounded-sm border border-gray-100 hover:border-gray-200 transition-all duration-300 group transition-all duration-1000 ease-out
-              ${contactBoxInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-            `}
-          >
-            <Mail size={24} className="mr-3 text-gray-600 group-hover:text-black transition-colors duration-300" />
-            <a 
-              href="mailto:email@example.com" 
-              className="text-xl font-medium text-gray-600 hover:text-black transition-colors duration-300"
-            >
-              email@example.com
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Form Section */}
-      <section className="py-20 bg-white text-darkgray">
+      {/* İletişim Formu Sadece */}
+      <section
+        id="iletisim"
+        ref={contactHeaderRef}
+        className={`py-20 lg:py-32 bg-white text-darkgray transition-all duration-500 ease-out
+          ${contactHeaderInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+        `}
+      >
         <div className="max-w-xl mx-auto px-6">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">İletişim</h2>
           <p className="text-center text-lg text-gray-500 mb-10">Aşağıdaki formu doldurarak bana ulaşabilirsin!</p>
@@ -346,12 +311,7 @@ Görsel iletişim tasarımı alanındaki eğitimimle başlayan yolculuğumda; ya
       </section>
 
       {/* Footer */}
-      <footer
-        ref={footerRef}
-        className={`bg-white border-t border-gray-100 py-8 text-darkgray transition-all duration-1000 ease-out
-          ${footerInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-        `}
-      >
+      <footer className="bg-white border-t border-gray-100 py-8 text-darkgray">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center text-gray-600">
             <p className="font-light">
