@@ -50,12 +50,13 @@ function App() {
   const InteractiveCanvas: React.FC = () => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const particlesRef = React.useRef<any[]>([]);
+    const mousePosition = React.useRef<{ x: number | null; y: number | null }>({ x: null, y: null });
     const palette = [
-      [255, 107, 107], // Canlı Mercan
-      [78, 205, 196],  // Orta Turkuaz
-      [247, 184, 1],   // Safran
-      [69, 183, 209],  // Pasifik Mavisi
-      [250, 208, 44],   // Mimoza
+      "rgba(255, 107, 107, 0.9)", // Canlı Mercan
+      "rgba(78, 205, 196, 0.9)",  // Orta Turkuaz
+      "rgba(247, 184, 1, 0.9)",   // Safran
+      "rgba(69, 183, 209, 0.9)",  // Pasifik Mavisi
+      "rgba(250, 208, 44, 0.9)",   // Mimoza
     ];
 
     React.useEffect(() => {
@@ -75,60 +76,80 @@ function App() {
       resizeCanvas();
       window.addEventListener('resize', resizeCanvas);
 
-      const handleMouseMove = (e: MouseEvent) => {
-        const x = e.clientX;
-        const y = e.clientY - canvas.getBoundingClientRect().top;
-        const color = palette[Math.floor(Math.random() * palette.length)];
-        particlesRef.current.push({
-          x,
-          y,
-          size: Math.random() * 20 + 10, // Fırça darbesi boyutu
-          opacity: 1,
-          color: `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${Math.random() * 0.1 + 0.05})`,
-          vx: 0,
-          vy: 0,
-        });
-      };
-
-      const handleMouseClick = (e: MouseEvent) => {
-        const x = e.clientX;
-        const y = e.clientY - canvas.getBoundingClientRect().top;
-        for (let i = 0; i < 30; i++) { // 30 parçacık oluştur
+      const createParticle = (x: number, y: number, isClick: boolean = false) => {
+        const particleCount = isClick ? 30 : 1;
+        for (let i = 0; i < particleCount; i++) {
+          if (particlesRef.current.length > 150) {
+            particlesRef.current.shift();
+          }
           const color = palette[Math.floor(Math.random() * palette.length)];
           particlesRef.current.push({
             x,
             y,
-            size: Math.random() * 10 + 5,
-            opacity: 1,
-            color: `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.7)`,
-            vx: (Math.random() - 0.5) * (Math.random() * 6),
-            vy: (Math.random() - 0.5) * (Math.random() * 6),
+            size: isClick ? Math.random() * 3 + 2 : Math.random() * 2 + 1,
+            color: color,
+            vx: (Math.random() - 0.5) * (isClick ? 4 : 1),
+            vy: (Math.random() - 0.5) * (isClick ? 4 : 1),
           });
         }
+      };
+
+      const handleMouseMove = (e: MouseEvent) => {
+        const rect = canvas.getBoundingClientRect();
+        mousePosition.current = { x: e.clientX, y: e.clientY };
+        createParticle(e.clientX - rect.left, e.clientY - rect.top);
+      };
+
+      const handleMouseClick = (e: MouseEvent) => {
+        const rect = canvas.getBoundingClientRect();
+        createParticle(e.clientX - rect.left, e.clientY - rect.top, true);
       };
 
       const animate = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
+        // Draw connections
+        for (let i = 0; i < particlesRef.current.length; i++) {
+          for (let j = i; j < particlesRef.current.length; j++) {
+            const p1 = particlesRef.current[i];
+            const p2 = particlesRef.current[j];
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 100) {
+              ctx.beginPath();
+              ctx.strokeStyle = p1.color.replace('0.9', `${1 - distance / 100}`);
+              ctx.lineWidth = 0.5;
+              ctx.moveTo(p1.x, p1.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Draw particles
         for (let i = 0; i < particlesRef.current.length; i++) {
           const p = particlesRef.current[i];
-          p.opacity -= 0.015; // Solma hızı
+          
+          // Update position
           p.x += p.vx;
           p.y += p.vy;
-          if (p.opacity <= 0) {
-            particlesRef.current.splice(i, 1);
-            i--;
-            continue;
-          }
-          
-          ctx.globalAlpha = p.opacity;
-          ctx.fillStyle = p.color;
+
+          // Bounce off walls
+          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+          // Draw particle
           ctx.beginPath();
+          ctx.fillStyle = p.color;
+          ctx.shadowColor = p.color;
+          ctx.shadowBlur = 10;
           ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
           ctx.fill();
         }
         
-        ctx.globalAlpha = 1;
+        ctx.shadowBlur = 0;
         animationFrameId = requestAnimationFrame(animate);
       };
 
@@ -145,10 +166,10 @@ function App() {
     }, []);
 
     return (
-      <section className="relative w-full h-[90vh] min-h-[600px] flex items-center justify-center bg-white overflow-hidden">
+      <section className="relative w-full h-[90vh] min-h-[600px] flex items-center justify-center bg-[#0e0e0e] overflow-hidden">
         <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full cursor-none" />
         <div className="relative z-10 w-full flex flex-col items-center justify-center pointer-events-none">
-          <h1 className="text-darkgray text-4xl md:text-6xl font-light text-center max-w-3xl mx-auto">
+          <h1 className="text-white text-4xl md:text-6xl font-light text-center max-w-3xl mx-auto">
             Bir fikrin dokunuşu her şeyi değiştirir.
           </h1>
         </div>
