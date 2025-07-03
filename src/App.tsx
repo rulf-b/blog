@@ -17,6 +17,133 @@ import { useInView } from './useInView';
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [language, setLanguage] = useState<'tr' | 'en'>('tr');
+
+  // Çeviri objeleri
+  const translations = {
+    tr: {
+      nav: {
+        about: 'Hakkımda',
+        services: 'Hizmetlerim',
+        contact: 'İletişim'
+      },
+      hero: {
+        title: 'Bir fikrin dokunuşu her şeyi değiştirir.'
+      },
+      about: {
+        title: 'Hakkımda',
+        p1: 'Merhaba, ben Zeynep Seda Argut. Görsel iletişim tasarımı alanındaki eğitimimle başlayan yolculuğumda; yaratıcı fikir üretimi, kampanya tasarımı, marka iletişimi, sosyal medya yönetimi ve sanat yönetimi gibi alanlarda aktif olarak çalıştım. Moda, yaşam stili ve kurumsal iletişim gibi farklı sektörlerde edindiğim deneyimlerle tasarım dilimi geliştirdim. Her projede hem stratejik hem de estetik bir bakış açısıyla üretmeye odaklandım. Tasarım sürecinde fikrin yön belirleyici olduğuna inanıyor, güçlü bir fikrin olmadığı yerde estetiğin de anlamını yitirdiğini düşünüyorum.',
+        p2: 'Tasarımı yalnızca görsel bir ifade biçimi değil, aynı zamanda çözüm üreten ve dönüşüm sağlayan bir araç olarak görüyorum. Kreatif metin yazarlığı, moodboard ve çekim konsepti geliştirme gibi alanlarda da üretmeye devam ediyorum. Gelecekteki hedefim; tasarım pratiğimi yapay zeka ve yaratıcı teknolojilerle entegre ederek dönüştürmek.',
+        p3: 'Değişen dünyaya adapte olma süreci beni heyecanlandırıyor; bu dönüşümün içinde aktif kalmayı önemsiyorum.'
+      },
+      services: {
+        title: 'Birlikte neler yapabiliriz ?',
+        items: [
+          {
+            title: 'Görsel Dünya ve Konsept Geliştirme',
+            desc: 'Markanın hikayesini yansıtan özgün görsel kurgu ve yaratıcı konseptler.'
+          },
+          {
+            title: 'Kreatif İçerik Üretimi',
+            desc: 'Dijital platformlara uygun, estetik ve stratejik içerikler.'
+          },
+          {
+            title: 'Sosyal Medya Tasarımı ve Yönetimi',
+            desc: 'Markaya özel sosyal medya kurgusu, tasarımı ve içerik planlaması.'
+          },
+          {
+            title: 'Marka Stratejisi ve İletişim Dili Oluşturma',
+            desc: 'Tutarlı bir marka kimligi için stratejik yaklaşım ve etkili iletişim dili.'
+          },
+          {
+            title: 'Kurumsal Kimlik Tasarımı',
+            desc: 'Logo, renk, tipografi ve uygulamalarla butunluklu görsel kimlik oluşturma.'
+          },
+          {
+            title: 'İsimlendirme ve Logo Tasarımı',
+            desc: 'Marka degerlerini yansıtan isim ve güçlü bir ilk izlenim için logo tasarımı.'
+          }
+        ]
+      },
+      contact: {
+        title: 'İletişim',
+        subtitle: 'Aşağıdaki formu doldurarak veya sosyal medya hesaplarımdan bana ulaşabilirsin!',
+        formTitle: 'Mesaj Gönder',
+        name: 'Adınız *',
+        email: 'E-posta Adresiniz *',
+        message: 'Mesajınız *',
+        submit: 'Mesajımı Gönder!',
+        namePlaceholder: 'Adınız...',
+        emailPlaceholder: 'E-posta adresiniz...',
+        messagePlaceholder: 'Mesajınız...'
+      },
+      footer: {
+        copyright: '© 2025 Zeynep Seda Argut. Tüm Hakları Saklıdır.'
+      }
+    },
+    en: {
+      nav: {
+        about: 'About',
+        services: 'Services',
+        contact: 'Contact'
+      },
+      hero: {
+        title: 'A touch of an idea changes everything.'
+      },
+      about: {
+        title: 'About Me',
+        p1: 'Hello, I am Zeynep Seda Argut. In my journey that began with my education in visual communication design; I have actively worked in areas such as creative idea generation, campaign design, brand communication, social media management and art direction. I developed my design language with the experiences I gained in different sectors such as fashion, lifestyle and corporate communication. In every project, I focused on producing with both strategic and aesthetic perspectives. I believe that the idea is the guiding direction in the design process, and I think that aesthetics loses its meaning where there is no strong idea.',
+        p2: 'I see design not only as a visual form of expression, but also as a tool that produces solutions and provides transformation. I continue to produce in areas such as creative copywriting, moodboard and shooting concept development. My future goal is to transform my design practice by integrating it with artificial intelligence and creative technologies.',
+        p3: 'The process of adapting to the changing world excites me; I care about staying active in this transformation.'
+      },
+      services: {
+        title: 'What can we do together?',
+        items: [
+          {
+            title: 'Visual World and Concept Development',
+            desc: 'Unique visual composition and creative concepts that reflect the brand story.'
+          },
+          {
+            title: 'Creative Content Production',
+            desc: 'Aesthetic and strategic content suitable for digital platforms.'
+          },
+          {
+            title: 'Social Media Design and Management',
+            desc: 'Brand-specific social media composition, design and content planning.'
+          },
+          {
+            title: 'Brand Strategy and Communication Language Creation',
+            desc: 'Strategic approach and effective communication language for a consistent brand identity.'
+          },
+          {
+            title: 'Corporate Identity Design',
+            desc: 'Creating a unified visual identity with logo, color, typography and applications.'
+          },
+          {
+            title: 'Naming and Logo Design',
+            desc: 'Name reflecting brand values and logo design for a strong first impression.'
+          }
+        ]
+      },
+      contact: {
+        title: 'Contact',
+        subtitle: 'You can reach me by filling out the form below or through my social media accounts!',
+        formTitle: 'Send Message',
+        name: 'Your Name *',
+        email: 'Your Email *',
+        message: 'Your Message *',
+        submit: 'Send My Message!',
+        namePlaceholder: 'Your name...',
+        emailPlaceholder: 'Your email...',
+        messagePlaceholder: 'Your message...'
+      },
+      footer: {
+        copyright: '© 2025 Zeynep Seda Argut. All Rights Reserved.'
+      }
+    }
+  };
+
+  const t = translations[language];
 
   // Kademeli animasyonlar için useInView
   // Hakkımda
@@ -170,7 +297,7 @@ function App() {
         <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full cursor-none" />
         <div className="relative z-10 w-full flex flex-col items-center justify-center pointer-events-none">
           <h1 className="text-white text-4xl md:text-6xl font-light text-center max-w-3xl mx-auto">
-            Bir fikrin dokunuşu her şeyi değiştirir.
+            {t.hero.title}
           </h1>
         </div>
       </section>
@@ -194,20 +321,45 @@ function App() {
                 onClick={() => scrollToSection('hakkimda')}
                 className="text-gray-200 hover:text-white transition-colors duration-200 font-medium"
               >
-                Hakkımda
+                {t.nav.about}
               </button>
               <button 
                 onClick={() => scrollToSection('hizmetlerim')}
                 className="text-gray-200 hover:text-white transition-colors duration-200 font-medium"
               >
-                Hizmetlerim
+                {t.nav.services}
               </button>
               <button 
                 onClick={() => scrollToSection('iletisim')}
                 className="text-gray-200 hover:text-white transition-colors duration-200 font-medium"
               >
-                İletişim
+                {t.nav.contact}
               </button>
+              
+              {/* Dil Değiştirme Butonu */}
+              <div className="flex items-center space-x-2 ml-4">
+                <button
+                  onClick={() => setLanguage('tr')}
+                  className={`px-2 py-1 text-sm font-medium rounded transition-colors duration-200 ${
+                    language === 'tr' 
+                      ? 'text-white bg-gray-700' 
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  TR
+                </button>
+                <span className="text-gray-500">|</span>
+                <button
+                  onClick={() => setLanguage('en')}
+                  className={`px-2 py-1 text-sm font-medium rounded transition-colors duration-200 ${
+                    language === 'en' 
+                      ? 'text-white bg-gray-700' 
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  EN
+                </button>
+              </div>
             </div>
 
             {/* Mobile Menu Button */}
@@ -228,20 +380,45 @@ function App() {
                 onClick={() => scrollToSection('hakkimda')}
                 className="block w-full text-left text-gray-200 hover:text-white transition-colors duration-200 font-medium py-2"
               >
-                Hakkımda
+                {t.nav.about}
               </button>
               <button 
                 onClick={() => scrollToSection('hizmetlerim')}
                 className="block w-full text-left text-gray-200 hover:text-white transition-colors duration-200 font-medium py-2"
               >
-                Hizmetlerim
+                {t.nav.services}
               </button>
               <button 
                 onClick={() => scrollToSection('iletisim')}
                 className="block w-full text-left text-gray-200 hover:text-white transition-colors duration-200 font-medium py-2"
               >
-                İletişim
+                {t.nav.contact}
               </button>
+              
+              {/* Mobil Dil Değiştirme */}
+              <div className="flex items-center justify-center space-x-4 pt-4 border-t border-gray-800">
+                <button
+                  onClick={() => setLanguage('tr')}
+                  className={`px-3 py-2 text-sm font-medium rounded transition-colors duration-200 ${
+                    language === 'tr' 
+                      ? 'text-white bg-gray-700' 
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  TR
+                </button>
+                <span className="text-gray-500">|</span>
+                <button
+                  onClick={() => setLanguage('en')}
+                  className={`px-3 py-2 text-sm font-medium rounded transition-colors duration-200 ${
+                    language === 'en' 
+                      ? 'text-white bg-gray-700' 
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  EN
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -282,7 +459,7 @@ function App() {
                 `}
                 style={{ transitionDelay: aboutSectionInView ? '100ms' : '0ms' }}
               >
-                Hakkımda
+                {t.about.title}
               </h3>
               <div className="space-y-6 text-darkgray max-w-[700px] mx-auto">
                 <p
@@ -291,8 +468,7 @@ function App() {
                   `}
                   style={{ transitionDelay: aboutSectionInView ? '250ms' : '0ms' }}
                 >
-                  Merhaba, ben <strong>Zeynep Seda Argut</strong>.
-                  Görsel iletişim tasarımı alanındaki eğitimimle başlayan yolculuğumda; yaratıcı fikir üretimi, kampanya tasarımı, marka iletişimi, <strong>sosyal medya yönetimi</strong> ve <strong>sanat yönetimi</strong> gibi alanlarda aktif olarak çalıştım. Moda, yaşam stili ve kurumsal iletişim gibi farklı sektörlerde edindiğim deneyimlerle tasarım dilimi geliştirdim. Her projede hem <strong>stratejik</strong> hem de <strong>estetik</strong> bir bakış açısıyla üretmeye odaklandım. Tasarım sürecinde fikrin yön belirleyici olduğuna inanıyor, güçlü bir fikrin olmadığı yerde estetiğin de anlamını yitirdiğini düşünüyorum.
+                  {t.about.p1}
                 </p>
                 <p
                   className={`text-lg leading-[1.7] transition-all duration-700
@@ -300,7 +476,7 @@ function App() {
                   `}
                   style={{ transitionDelay: aboutSectionInView ? '400ms' : '0ms' }}
                 >
-                  Tasarımı yalnızca görsel bir ifade biçimi değil, aynı zamanda çözüm üreten ve dönüşüm sağlayan bir araç olarak görüyorum. Kreatif metin yazarlığı, moodboard ve <strong>çekim konsepti geliştirme</strong> gibi alanlarda da üretmeye devam ediyorum. Gelecekteki hedefim; tasarım pratiğimi <strong>yapay zeka</strong> ve <strong>yaratıcı teknolojilerle</strong> entegre ederek dönüştürmek.
+                  {t.about.p2}
                 </p>
                 <p
                   className={`text-lg leading-[1.7] transition-all duration-700
@@ -308,7 +484,7 @@ function App() {
                   `}
                   style={{ transitionDelay: aboutSectionInView ? '550ms' : '0ms' }}
                 >
-                  Değişen dünyaya adapte olma süreci beni heyecanlandırıyor; bu dönüşümün içinde aktif kalmayı önemsiyorum.
+                  {t.about.p3}
                 </p>
               </div>
             </div>
@@ -330,7 +506,7 @@ function App() {
               `}
               style={{ transitionDelay: servicesSectionInView ? '0ms' : '0ms' }}
             >
-              Birlikte neler yapabiliriz ?
+              {t.services.title}
             </h3>
           </div>
           <div
@@ -338,32 +514,7 @@ function App() {
               ${servicesSectionInView ? 'opacity-100' : 'opacity-0'}
             `}
           >
-            {[
-              {
-                title: 'Görsel Dünya ve Konsept Geliştirme',
-                desc: 'Markanın hikayesini yansıtan özgün görsel kurgu ve yaratıcı konseptler.'
-              },
-              {
-                title: 'Kreatif İçerik Üretimi',
-                desc: 'Dijital platformlara uygun, estetik ve stratejik içerikler.'
-              },
-              {
-                title: 'Sosyal Medya Tasarımı ve Yönetimi',
-                desc: 'Markaya özel sosyal medya kurgusu, tasarımı ve içerik planlaması.'
-              },
-              {
-                title: 'Marka Stratejisi ve İletişim Dili Oluşturma',
-                desc: 'Tutarlı bir marka kimligi için stratejik yaklaşım ve etkili iletişim dili.'
-              },
-              {
-                title: 'Kurumsal Kimlik Tasarımı',
-                desc: 'Logo, renk, tipografi ve uygulamalarla butunluklu görsel kimlik oluşturma.'
-              },
-              {
-                title: 'İsimlendirme ve Logo Tasarımı',
-                desc: 'Marka degerlerini yansıtan isim ve güçlü bir ilk izlenim için logo tasarımı.'
-              }
-            ].map((item, idx) => (
+            {t.services.items.map((item, idx) => (
               <div
                 key={item.title}
                 className={`flex flex-col items-center text-center group relative transition-all duration-700
@@ -396,10 +547,10 @@ function App() {
       >
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 transition-all duration-700">
-            İletişim
+            {t.contact.title}
           </h2>
           <p className="text-center text-lg text-gray-500 mb-16 transition-all duration-700">
-            Aşağıdaki formu doldurarak veya sosyal medya hesaplarımdan bana ulaşabilirsin!
+            {t.contact.subtitle}
           </p>
           
           {/* Sosyal Medya Butonları */}
@@ -471,20 +622,20 @@ function App() {
           {/* İletişim Formu */}
           <div className="max-w-xl mx-auto">
             <h3 className="text-2xl font-semibold text-center mb-8 text-darkgray">
-              Mesaj Gönder
+              {t.contact.formTitle}
             </h3>
             <form className="space-y-8">
               <div
                 className={`transition-all duration-700 ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
                 style={{ transitionDelay: contactSectionInView ? '200ms' : '0ms' }}
               >
-                <label className="block text-base font-medium mb-2" htmlFor="name">Adınız *</label>
+                <label className="block text-base font-medium mb-2" htmlFor="name">{t.contact.name}</label>
                 <input
                   id="name"
                   name="name"
                   type="text"
                   required
-                  placeholder="Adınız..."
+                  placeholder={t.contact.namePlaceholder}
                   className="w-full border-0 border-b border-gray-300 px-0 py-3 text-lg focus:outline-none focus:border-b-2 focus:border-darkgray bg-white transition-all duration-200"
                 />
               </div>
@@ -492,13 +643,13 @@ function App() {
                 className={`transition-all duration-700 ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
                 style={{ transitionDelay: contactSectionInView ? '300ms' : '0ms' }}
               >
-                <label className="block text-base font-medium mb-2" htmlFor="email">E-posta Adresiniz *</label>
+                <label className="block text-base font-medium mb-2" htmlFor="email">{t.contact.email}</label>
                 <input
                   id="email"
                   name="email"
                   type="email"
                   required
-                  placeholder="E-posta adresiniz..."
+                  placeholder={t.contact.emailPlaceholder}
                   className="w-full border-0 border-b border-gray-300 px-0 py-3 text-lg focus:outline-none focus:border-b-2 focus:border-darkgray bg-white transition-all duration-200"
                 />
               </div>
@@ -506,12 +657,12 @@ function App() {
                 className={`transition-all duration-700 ${contactSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
                 style={{ transitionDelay: contactSectionInView ? '400ms' : '0ms' }}
               >
-                <label className="block text-base font-medium mb-2" htmlFor="message">Mesajınız *</label>
+                <label className="block text-base font-medium mb-2" htmlFor="message">{t.contact.message}</label>
                 <textarea
                   id="message"
                   name="message"
                   required
-                  placeholder="Mesajınız..."
+                  placeholder={t.contact.messagePlaceholder}
                   rows={5}
                   className="w-full border-0 border-b border-gray-300 px-0 py-3 text-lg focus:outline-none focus:border-b-2 focus:border-darkgray bg-white resize-none transition-all duration-200"
                 />
@@ -521,11 +672,12 @@ function App() {
                 style={{ transitionDelay: contactSectionInView ? '500ms' : '0ms' }}
               >
                 <button
-                  type="submit"
-                  className="w-full bg-darkgray text-white font-bold py-3 rounded-md text-lg transition-all duration-200 hover:brightness-110 hover:scale-105"
-                >
-                  Mesajımı Gönder!
-                </button>
+                type="submit"
+                className="w-full bg-darkgray text-white font-bold py-4 rounded-lg text-lg transition-all duration-300 ease-in-out flex items-center justify-center group hover:bg-gray-700 hover:shadow-lg hover:-translate-y-1"
+              >
+                {t.contact.submit}
+                <Mail size={22} className="ml-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </button>
               </div>
             </form>
           </div>
@@ -537,7 +689,7 @@ function App() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center text-gray-600">
             <p className="font-light">
-              © 2025 Zeynep Seda Argut. Tüm Hakları Saklıdır.
+              {t.footer.copyright}
             </p>
           </div>
         </div>
