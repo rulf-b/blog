@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Code, 
-  Palette, 
-  Search, 
-  ShoppingCart, 
   Menu, 
   X,
   Mail,
   ArrowUp,
   Instagram,
-  Linkedin,
-  ExternalLink
+  Linkedin
 } from 'lucide-react';
 import { useInView } from './useInView';
 
@@ -29,7 +24,7 @@ function App() {
         contact: 'İletişim'
       },
       hero: {
-        title: 'Bir fikrin dokunuşu her şeyi değiştirir.'
+        title: 'Hikaye>'
       },
       about: {
         title: 'Hakkımda',
@@ -38,7 +33,7 @@ function App() {
         p3: 'Değişen dünyaya adapte olma süreci beni heyecanlandırıyor; bu dönüşümün içinde <strong>aktif kalmayı</strong> önemsiyorum.'
       },
       services: {
-        title: 'Birlikte neler yapabiliriz ?',
+        title: 'Birlikte Neler Yapabiliriz?',
         items: [
           {
             title: 'Görsel Dünya ve Konsept Geliştirme',
@@ -54,11 +49,11 @@ function App() {
           },
           {
             title: 'Marka Stratejisi ve İletişim Dili Oluşturma',
-            desc: 'Tutarlı bir marka kimligi için stratejik yaklaşım ve etkili iletişim dili.'
+            desc: 'Tutarlı bir marka kimliği için stratejik yaklaşım ve etkili iletişim dili.'
           },
           {
             title: 'Kurumsal Kimlik Tasarımı',
-            desc: 'Logo, renk, tipografi ve uygulamalarla butunluklu görsel kimlik oluşturma.'
+            desc: 'Logo, renk, tipografi ve uygulamalarla bütünlüklü görsel kimlik oluşturma.'
           },
           {
             title: 'İsimlendirme ve Logo Tasarımı',
@@ -190,6 +185,33 @@ function App() {
     }
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const honeypot = (form.elements.namedItem('website') as HTMLInputElement)?.value;
+    if (honeypot) {
+      alert('Spam koruması: Lütfen tekrar deneyin.');
+      return;
+    }
+    // PHP'ye veri gönder
+    const formData = new FormData(form);
+    try {
+      const res = await fetch('/contact.php', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert('Mesajınız başarıyla gönderildi!');
+        form.reset();
+      } else {
+        alert(data.error || 'Bir hata oluştu, lütfen tekrar deneyin.');
+      }
+    } catch (err) {
+      alert('Sunucuya ulaşılamadı.');
+    }
+  };
+
   // Interactive Canvas Section
   const InteractiveCanvas: React.FC = () => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -313,7 +335,7 @@ function App() {
       <section className="relative w-full h-[90vh] min-h-[600px] flex items-center justify-center bg-[#0e0e0e] overflow-hidden">
         <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full cursor-none" />
         <div className="relative z-10 w-full flex flex-col items-center justify-center pointer-events-none">
-          <h1 className="text-white text-4xl md:text-6xl font-light text-center max-w-3xl mx-auto">
+          <h1 className="text-white text-4xl md:text-6xl font-light text-center max-w-3xl mx-auto relative" style={{top: '-8px'}}>
             {t.hero.title}
           </h1>
         </div>
@@ -515,7 +537,7 @@ function App() {
         <div className="w-full max-w-[1200px] mx-auto bg-white rounded-[12px] shadow-none px-0 md:px-0 py-0 md:py-0 border-none">
           <div className="text-center mb-20">
             <h3
-              className={`text-5xl md:text-6xl font-normal mb-6 tracking-tight leading-none uppercase transition-all duration-700
+              className={`text-5xl md:text-6xl font-normal mb-6 tracking-tight leading-none transition-all duration-700
                 ${servicesSectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
               `}
               style={{ transitionDelay: servicesSectionInView ? '0ms' : '0ms' }}
@@ -536,8 +558,8 @@ function App() {
                 `}
                 style={{ transitionDelay: servicesSectionInView ? `${150 + idx * 100}ms` : '0ms' }}
               >
-                <div className="w-11/12 h-px bg-gray-300 mb-6 mx-auto relative overflow-hidden group-hover:bg-transparent">
-                  <span className="absolute top-0 left-1/2 w-0 h-full bg-black transition-all duration-500 ease-out group-hover:w-full group-hover:left-0"></span>
+                <div className="w-full h-0.5 bg-gray-300 mb-6 mx-auto relative overflow-hidden group-hover:bg-transparent">
+                  <span className="absolute top-0 left-1/2 w-0 h-full bg-gradient-to-r from-pink-500 to-red-500 transition-all duration-500 ease-out group-hover:w-full group-hover:left-0"></span>
                 </div>
                 <h4 className="text-2xl font-semibold mb-3 tracking-tight leading-tight cursor-pointer">
                   {item.title}
@@ -656,7 +678,12 @@ function App() {
               <h3 className="text-3xl font-light text-center mb-8 text-darkgray tracking-tight">
                 {t.contact.formTitle}
               </h3>
-              <form className="space-y-8">
+              <form className="space-y-8" onSubmit={handleSubmit}>
+                {/* Honeypot spam koruma alanı */}
+                <div style={{display: 'none'}}>
+                  <label htmlFor="website">Websiteniz</label>
+                  <input id="website" name="website" type="text" autoComplete="off" tabIndex={-1} />
+                </div>
                 {/* Name Input */}
                 <div className="relative">
                   <input
