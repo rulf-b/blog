@@ -24,7 +24,7 @@ function App() {
         contact: 'İletişim'
       },
       hero: {
-        title: 'Hikaye>'
+        title: 'Fikir >'
       },
       about: {
         title: 'Hakkımda',
@@ -214,126 +214,57 @@ function App() {
 
   // Interactive Canvas Section
   const InteractiveCanvas: React.FC = () => {
-    const canvasRef = React.useRef<HTMLCanvasElement>(null);
-    const particlesRef = React.useRef<any[]>([]);
-    const mousePosition = React.useRef<{ x: number | null; y: number | null }>({ x: null, y: null });
-    const palette = [
-      "rgba(255, 107, 107, 0.9)", // Canlı Mercan
-      "rgba(78, 205, 196, 0.9)",  // Orta Turkuaz
-      "rgba(247, 184, 1, 0.9)",   // Safran
-      "rgba(69, 183, 209, 0.9)",  // Pasifik Mavisi
-      "rgba(250, 208, 44, 0.9)",   // Mimoza
-    ];
+    const [mouse, setMouse] = React.useState<{x: number, y: number} | null>(null);
+    const sectionRef = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-
-      let animationFrameId: number;
-
-      const resizeCanvas = () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight * 0.9;
-      };
-      
-      resizeCanvas();
-      window.addEventListener('resize', resizeCanvas);
-
-      const createParticle = (x: number, y: number, isClick: boolean = false) => {
-        const particleCount = isClick ? 30 : 1;
-        for (let i = 0; i < particleCount; i++) {
-          if (particlesRef.current.length > 150) {
-            particlesRef.current.shift();
-          }
-          const color = palette[Math.floor(Math.random() * palette.length)];
-          particlesRef.current.push({
-            x,
-            y,
-            size: isClick ? Math.random() * 3 + 2 : Math.random() * 2 + 1,
-            color: color,
-            vx: (Math.random() - 0.5) * (isClick ? 4 : 1),
-            vy: (Math.random() - 0.5) * (isClick ? 4 : 1),
-          });
-        }
-      };
-
       const handleMouseMove = (e: MouseEvent) => {
-        const rect = canvas.getBoundingClientRect();
-        mousePosition.current = { x: e.clientX, y: e.clientY };
-        createParticle(e.clientX - rect.left, e.clientY - rect.top);
+        if (!sectionRef.current) return;
+        const rect = sectionRef.current.getBoundingClientRect();
+        setMouse({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        });
       };
-
-      const handleMouseClick = (e: MouseEvent) => {
-        const rect = canvas.getBoundingClientRect();
-        createParticle(e.clientX - rect.left, e.clientY - rect.top, true);
-      };
-
-      const animate = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Draw connections
-        for (let i = 0; i < particlesRef.current.length; i++) {
-          for (let j = i; j < particlesRef.current.length; j++) {
-            const p1 = particlesRef.current[i];
-            const p2 = particlesRef.current[j];
-            const dx = p1.x - p2.x;
-            const dy = p1.y - p2.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 100) {
-              ctx.beginPath();
-              ctx.strokeStyle = p1.color.replace('0.9', `${1 - distance / 100}`);
-              ctx.lineWidth = 0.5;
-              ctx.moveTo(p1.x, p1.y);
-              ctx.lineTo(p2.x, p2.y);
-              ctx.stroke();
-            }
-          }
-        }
-
-        // Draw particles
-        for (let i = 0; i < particlesRef.current.length; i++) {
-          const p = particlesRef.current[i];
-          
-          // Update position
-          p.x += p.vx;
-          p.y += p.vy;
-
-          // Bounce off walls
-          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-          // Draw particle
-          ctx.beginPath();
-          ctx.fillStyle = p.color;
-          ctx.shadowColor = p.color;
-          ctx.shadowBlur = 10;
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        
-        ctx.shadowBlur = 0;
-        animationFrameId = requestAnimationFrame(animate);
-      };
-
-      canvas.addEventListener('mousemove', handleMouseMove);
-      canvas.addEventListener('click', handleMouseClick);
-      animate();
-
+      const handleMouseLeave = () => setMouse(null);
+      const section = sectionRef.current;
+      if (section) {
+        section.addEventListener('mousemove', handleMouseMove);
+        section.addEventListener('mouseleave', handleMouseLeave);
+      }
       return () => {
-        window.removeEventListener('resize', resizeCanvas);
-        canvas.removeEventListener('mousemove', handleMouseMove);
-        canvas.removeEventListener('click', handleMouseClick);
-        cancelAnimationFrame(animationFrameId);
+        if (section) {
+          section.removeEventListener('mousemove', handleMouseMove);
+          section.removeEventListener('mouseleave', handleMouseLeave);
+        }
       };
     }, []);
 
     return (
-      <section className="relative w-full h-[90vh] min-h-[600px] flex items-center justify-center bg-[#0e0e0e] overflow-hidden">
-        <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full cursor-none" />
+      <section ref={sectionRef} className="relative w-full h-[90vh] min-h-[600px] flex items-center justify-center bg-[#0e0e0e] overflow-hidden select-none">
+        {/* Invert efekti için SVG mask ve filter */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+          <svg width="100%" height="100%" style={{position:'absolute',top:0,left:0}}>
+            <defs>
+              <filter id="invert-filter">
+                <feColorMatrix type="matrix" values="-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1  0 0 0 1 0" />
+              </filter>
+              {mouse && (
+                <mask id="circle-mask">
+                  <rect width="100%" height="100%" fill="white" />
+                  <circle cx={mouse.x} cy={mouse.y} r="40" fill="black" />
+                </mask>
+              )}
+            </defs>
+            {/* Arka planı invert et */}
+            <rect width="100%" height="100%" fill="#0e0e0e" />
+            {mouse && (
+              <g filter="url(#invert-filter)" mask="url(#circle-mask)">
+                <rect width="100%" height="100%" fill="#0e0e0e" />
+              </g>
+            )}
+          </svg>
+        </div>
         <div className="relative z-10 w-full flex flex-col items-center justify-center pointer-events-none">
           <h1 className="text-white text-4xl md:text-6xl font-light text-center max-w-3xl mx-auto relative" style={{top: '-8px'}}>
             {t.hero.title}
