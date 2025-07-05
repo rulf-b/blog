@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import {
   Menu,
   X,
@@ -10,26 +10,20 @@ import {
 import { useInView } from './useInView';
 
 // Interactive Canvas Section
-const InteractiveCanvas: React.FC<{ 
-  title: string;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-}> = ({ title, onMouseEnter, onMouseLeave }) => {
+const InteractiveCanvas = forwardRef<HTMLDivElement, { title: string }>((props, ref) => {
   return (
     <section 
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      ref={ref}
       className="relative w-full h-[90vh] min-h-[600px] flex items-center justify-center bg-[#0e0e0e] overflow-hidden select-none"
     >
       <div className="relative z-10 w-full flex flex-col items-center justify-center pointer-events-none">
         <h1 className="text-white text-4xl md:text-6xl font-light text-center max-w-3xl mx-auto relative" style={{top: '-8px'}}>
-          {title}
+          {props.title}
         </h1>
       </div>
     </section>
   );
-};
-
+});
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,15 +33,47 @@ function App() {
   const [mouse, setMouse] = useState<{x: number, y: number} | null>(null);
   const [isCursorVisible, setIsCursorVisible] = useState(false);
 
+  const navRef = useRef<HTMLElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMouse({ x: e.clientX, y: e.clientY });
+    const checkBounds = (clientX: number, clientY: number) => {
+      const navBounds = navRef.current?.getBoundingClientRect();
+      const canvasBounds = canvasRef.current?.getBoundingClientRect();
+
+      const isOverNav = navBounds 
+        ? (clientX >= navBounds.left && clientX <= navBounds.right && clientY >= navBounds.top && clientY <= navBounds.bottom) 
+        : false;
+
+      const isOverCanvas = canvasBounds 
+        ? (clientX >= canvasBounds.left && clientX <= canvasBounds.right && clientY >= canvasBounds.top && clientY <= canvasBounds.bottom)
+        : false;
+
+      setIsCursorVisible(isOverNav || isOverCanvas);
     };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const newMousePos = { x: e.clientX, y: e.clientY };
+      setMouse(newMousePos);
+      checkBounds(newMousePos.x, newMousePos.y);
+    };
+
+    const handleScroll = () => {
+      if (mouse) {
+        checkBounds(mouse.x, mouse.y);
+      } else {
+        setIsCursorVisible(false);
+      }
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [mouse]);
 
   const translations = {
     tr: {
@@ -147,8 +173,7 @@ function App() {
 
       {/* Navigation */}
       <nav 
-        onMouseEnter={() => setIsCursorVisible(true)}
-        onMouseLeave={() => setIsCursorVisible(false)}
+        ref={navRef}
         className="fixed top-0 left-0 right-0 z-50 bg-[#0e0e0e] border-b border-gray-900"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -194,9 +219,8 @@ function App() {
       </nav>
       {/* Interactive Canvas */}
       <InteractiveCanvas 
+        ref={canvasRef}
         title={t.hero.title} 
-        onMouseEnter={() => setIsCursorVisible(true)}
-        onMouseLeave={() => setIsCursorVisible(false)}
       />
       {/* About Me Section */}
       <section id="hakkimda" className="py-20 lg:py-32 bg-white text-darkgray">
