@@ -35,33 +35,24 @@ const InteractiveCanvas: React.FC<{ title: string }> = ({ title }) => {
 
   return (
     <section ref={sectionRef} className="relative w-full h-[90vh] min-h-[600px] flex items-center justify-center bg-[#0e0e0e] overflow-hidden select-none">
-      {/* Invert efekti için SVG mask ve filter */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <svg width="100%" height="100%" style={{position:'absolute',top:0,left:0}}>
-          <defs>
-            <filter id="invert-filter">
-              <feColorMatrix type="matrix" values="-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1  0 0 0 1 0" />
-            </filter>
-            {mouse && (
-              <mask id="circle-mask">
-                <rect width="100%" height="100%" fill="black" />
-                <circle cx={mouse.x} cy={mouse.y} r="40" fill="white" />
-              </mask>
-            )}
-          </defs>
-          <rect width="100%" height="100%" fill="#0e0e0e" />
-          {mouse && (
-            <g filter="url(#invert-filter)" mask="url(#circle-mask)">
-              <rect width="100%" height="100%" fill="#000" />
-            </g>
-          )}
-        </svg>
-      </div>
-      <div className="relative z-10 w-full flex flex-col items-center justify-center pointer-events-none">
+      <div className="relative w-full flex flex-col items-center justify-center pointer-events-none">
         <h1 className="text-white text-4xl md:text-6xl font-light text-center max-w-3xl mx-auto relative" style={{top: '-8px'}}>
           {title}
         </h1>
       </div>
+      {mouse && (
+        <div
+          className="pointer-events-none absolute rounded-full bg-white"
+          style={{
+            top: mouse.y,
+            left: mouse.x,
+            width: '80px',
+            height: '80px',
+            transform: 'translate(-50%, -50%)',
+            mixBlendMode: 'difference',
+          }}
+        />
+      )}
     </section>
   );
 };
