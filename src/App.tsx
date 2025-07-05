@@ -10,49 +10,22 @@ import {
 import { useInView } from './useInView';
 
 // Interactive Canvas Section
-const InteractiveCanvas: React.FC<{ title: string }> = ({ title }) => {
-  const [mouse, setMouse] = React.useState<{x: number, y: number} | null>(null);
-  const sectionRef = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = section.getBoundingClientRect();
-      setMouse({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      });
-    };
-    const handleMouseLeave = () => setMouse(null);
-    section.addEventListener('mousemove', handleMouseMove);
-    section.addEventListener('mouseleave', handleMouseLeave);
-    return () => {
-      section.removeEventListener('mousemove', handleMouseMove);
-      section.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
-
+const InteractiveCanvas: React.FC<{ 
+  title: string;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+}> = ({ title, onMouseEnter, onMouseLeave }) => {
   return (
-    <section ref={sectionRef} className="relative w-full h-[90vh] min-h-[600px] flex items-center justify-center bg-[#0e0e0e] overflow-hidden select-none">
-      <div className="relative w-full flex flex-col items-center justify-center pointer-events-none">
+    <section 
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className="relative w-full h-[90vh] min-h-[600px] flex items-center justify-center bg-[#0e0e0e] overflow-hidden select-none"
+    >
+      <div className="relative z-10 w-full flex flex-col items-center justify-center pointer-events-none">
         <h1 className="text-white text-4xl md:text-6xl font-light text-center max-w-3xl mx-auto relative" style={{top: '-8px'}}>
           {title}
         </h1>
       </div>
-      {mouse && (
-        <div
-          className="pointer-events-none absolute rounded-full bg-white"
-          style={{
-            top: mouse.y,
-            left: mouse.x,
-            width: '80px',
-            height: '80px',
-            transform: 'translate(-50%, -50%)',
-            mixBlendMode: 'difference',
-          }}
-        />
-      )}
     </section>
   );
 };
@@ -63,8 +36,18 @@ function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [language, setLanguage] = useState<'tr' | 'en'>('tr');
   const [emailCopied, setEmailCopied] = useState(false);
+  const [mouse, setMouse] = useState<{x: number, y: number} | null>(null);
+  const [isCursorVisible, setIsCursorVisible] = useState(false);
 
-  // --- ADIM 3: App içindeki tüm fare takip kodları temizlendi ---
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMouse({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   const translations = {
     tr: {
@@ -147,8 +130,27 @@ function App() {
 
   return (
     <div className="font-sans bg-white text-darkgray">
+      {isCursorVisible && mouse && (
+        <div
+          className="pointer-events-none rounded-full bg-white z-[9999]"
+          style={{
+            position: 'fixed',
+            top: mouse.y,
+            left: mouse.x,
+            width: '80px',
+            height: '80px',
+            transform: 'translate(-50%, -50%)',
+            mixBlendMode: 'difference',
+          }}
+        />
+      )}
+
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0e0e0e] border-b border-gray-900">
+      <nav 
+        onMouseEnter={() => setIsCursorVisible(true)}
+        onMouseLeave={() => setIsCursorVisible(false)}
+        className="fixed top-0 left-0 right-0 z-50 bg-[#0e0e0e] border-b border-gray-900"
+      >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex flex-col items-center justify-center leading-[1.1]">
@@ -191,7 +193,11 @@ function App() {
         )}
       </nav>
       {/* Interactive Canvas */}
-      <InteractiveCanvas title={t.hero.title} />
+      <InteractiveCanvas 
+        title={t.hero.title} 
+        onMouseEnter={() => setIsCursorVisible(true)}
+        onMouseLeave={() => setIsCursorVisible(false)}
+      />
       {/* About Me Section */}
       <section id="hakkimda" className="py-20 lg:py-32 bg-white text-darkgray">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
